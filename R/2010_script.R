@@ -1,4 +1,4 @@
-# Setting up US States vector and US House seats, add state abbreviations in later version!!!
+# Setting up US States vector and US House seats
 us_house_seats <- 435
 us_states <- c(
   'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado',
@@ -34,16 +34,15 @@ us_pop$Population <- gsub(',', '', us_pop$Population)
 us_pop$Population <- as.numeric(us_pop$Population)
 us_pop <- us_pop[, c(3, 1, 2)]
 
-# Setting up "Representatives", "Pop_per_Rep", "Pop_per_Rep_Plus_1" columns
+# Setting up "Representatives", "PpR", "PpR_Plus1" columns
 us_pop$Representatives <- 1
-us_house_seats <- us_house_seats - length(us_states)
-
 us_pop$PpR <- us_pop$Population / us_pop$Representatives
 us_pop$PpR_Plus1 <- us_pop$Population / (us_pop$Representatives + 1)
 
 # Setting up initial values for "app_round", "pre_loop_us_house_seats" variables for dynamic indexing in loops
 app_round <- 2
-pre_loop_us_house_seats <- us_house_seats
+pre_loop_us_house_seats <- us_house_seats - length(us_states)
+us_house_seats <- pre_loop_us_house_seats
 
 # Setting up the "sum_comparison" and "state_rep" tables
 sum_comparison <- tibble(
@@ -88,7 +87,7 @@ while (us_house_seats > 0) {
       
     }
   
-    # Sums up each states "base state_comparison" values 
+    # Sums up each state's "base state_comparison" values 
     sum_comparison[app_round, j + sum_comparison_col_adj] <- sum(us_pop[, j + us_pop_col_adj])
     
   }
