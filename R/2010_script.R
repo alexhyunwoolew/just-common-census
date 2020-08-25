@@ -110,11 +110,11 @@ print('Done')
 
 # Pivots state_reps table to get Representatives by State by Round
 state_reps <- state_reps %>%
-  pivot_longer(-Round, names_to = "State", values_to = "Representatives")
+  pivot_longer(-Round, names_to = 'State', values_to = 'Representatives')
 
 # Pivots sum_comparison table to get Match-up by State by Round
 sum_comparison <- sum_comparison %>%
-  pivot_longer(-Round, names_to = "State", values_to = "Standing")
+  pivot_longer(-Round, names_to = 'State', values_to = 'Standing')
 
 # Merges two tables together into data table for Tableau
 data_table <- add_column(state_reps, Standing = sum_comparison$Standing)
